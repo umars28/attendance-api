@@ -29,4 +29,5 @@ class User extends Authenticatable
     public function supervisor()
     {
         return $this->belongsTo(User::class, 'npp_supervisor', 'npp');
+    }
 }
