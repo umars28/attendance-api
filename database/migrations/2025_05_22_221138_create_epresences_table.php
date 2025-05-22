@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('epresences', function (Blueprint $table) {
+        Schema::create('epresence', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_users')->constrained('users')->onDelete('cascade');
+            $table->enum('type', ['in', 'out']);
+            $table->boolean('is_approve')->default(false);
+            $table->timestamp('waktu');
             $table->timestamps();
         });
     }

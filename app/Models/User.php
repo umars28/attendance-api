@@ -12,33 +12,21 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['nama', 'email', 'npp', 'npp_supervisor'];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password'];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function epresences()
+    {
+        return $this->hasMany(Epresence::class, 'id_users');
+    }
+
+    public function subordinates()
+    {
+        return $this->hasMany(User::class, 'npp_supervisor', 'npp');
+    }
+
+    public function supervisor()
+    {
+        return $this->belongsTo(User::class, 'npp_supervisor', 'npp');
 }
