@@ -1,0 +1,48 @@
+name: Attendace CI Feature Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  feature-tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_DB: laravel_test
+          POSTGRES_USER: laravel
+          POSTGRES_PASSWORD: secret
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Copy .env.testing
+        run: cp .env.testing .env
+
+      - name: Generate app key
+        run: php artisan key:generate
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      - name: Run feature tests only
+        run: php artisan test --testsuite=Feature
