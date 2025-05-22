@@ -1,21 +1,22 @@
-name: Attendace CI Feature Tests
+name: Run Laravel Tests
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
 
 jobs:
-  feature-tests:
+  laravel-tests:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_DB: laravel_test
-          POSTGRES_USER: laravel
-          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: attendance_api_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: secret123
         ports:
           - 5432:5432
         options: >-
@@ -24,25 +25,37 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    steps:
-      - uses: actions/checkout@v4
+    env:
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_DATABASE: attendance_api_test
+      DB_USERNAME: postgres
+      DB_PASSWORD: secret123
+      APP_ENV: testing
 
-      - name: Setup PHP
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
+          extensions: pdo_pgsql
+          coverage: none
 
-      - name: Install dependencies
-        run: composer install
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist
 
-      - name: Copy .env.testing
-        run: cp .env.testing .env
+      - name: Copy .env if needed
+        run: cp .env.example .env
 
-      - name: Generate app key
+      - name: Generate application key
         run: php artisan key:generate
 
-      - name: Run migrations
+      - name: Run database migrations
         run: php artisan migrate --force
 
-      - name: Run feature tests only
-        run: php artisan test --testsuite=Feature
+      - name: Run feature and unit tests
+        run: php artisan test
