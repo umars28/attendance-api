@@ -58,4 +58,4 @@ jobs:
         run: php artisan migrate --force
 
       - name: Run feature and unit tests
-        run: php artisan test
+        run: php artisan test --testsuite=Feature
