@@ -87,9 +87,9 @@ This is a RESTful API built for an attendance management system
 7. Run seeder
     ```bash
     php artisan db:seed
-8. Run unit/integration test (optional)
+8. Run integration test (optional)
     ```bash
-    php artisan test
+    php artisan test --testsuite=Feature 
 9. Serve the application
     ```bash
     php artisan serve
