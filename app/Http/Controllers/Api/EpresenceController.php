@@ -68,4 +68,29 @@ class EpresenceController extends Controller
         }  
     }
 
+    public function approve($id, Request $request)
+    {
+        try {
+            $epresence = $this->service->approve($id);
+
+            return response()->json([
+                'status'    => 'success',
+                'message'   => 'Presence has been approved successfully',
+                'data'      => new EpresenceDetailResource($epresence)
+            ], 200); 
+
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'You are not authorized to approve this record'
+            ], 403);
+
+        } catch (Throwable $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'An unexpected error occurred while approving the presence',
+            ], 500);
+        }
+    }
+
 }

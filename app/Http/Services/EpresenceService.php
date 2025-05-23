@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Enums\ApprovalStatus;
 use App\Models\Epresence;
 use App\Models\User;
 use Carbon\Carbon;
@@ -63,5 +64,16 @@ class EpresenceService
             'waktu'         => $data['waktu'],
             'is_approve'    => false
         ]);
+    }
+
+    public function approve(int $id)
+    {
+        $epresence = Epresence::with('user')->findOrFail($id);
+        
+        $this->gate->authorize('approve', $epresence);
+
+        $epresence->update(['is_approve' => ApprovalStatus::True]);
+
+        return $epresence;
     }
 }

@@ -20,4 +20,5 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/epresence', [EpresenceController::class, 'index']);
     Route::post('/epresence', [EpresenceController::class, 'store']);
+    Route::patch('/epresence/{id}/approve', [EpresenceController::class, 'approve']);
 });

@@ -18,7 +18,7 @@ class EpresenceDetailResource extends JsonResource
             'id'            => $this->id,
             'type'          => strtoupper($this->type),
             'waktu'         => $this->waktu ? $this->waktu->format('Y-m-d H:i:s') : null,
-            'is_approve'    => $this->is_approve
+            'is_approve'    => $this->is_approve ? 'APPROVE' : 'REJECT'
         ];
     }
 }
