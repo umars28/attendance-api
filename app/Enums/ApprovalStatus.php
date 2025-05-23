@@ -11,7 +11,6 @@ use BenSampo\Enum\Enum;
  */
 final class ApprovalStatus extends Enum
 {
-    const OptionOne = 0;
-    const OptionTwo = 1;
-    const OptionThree = 2;
+    const True = true;
+    const False = false;
 }
