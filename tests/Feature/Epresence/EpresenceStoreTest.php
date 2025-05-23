@@ -35,7 +35,7 @@ class EpresenceStoreTest extends TestCase
                 'message' => 'Record created successfully',
                 'data' => [
                     'type' => 'IN',
-                    'is_approve' => false,
+                    'is_approve' => 'REJECT',
                 ],
             ]);
 
