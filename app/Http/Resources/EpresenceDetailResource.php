@@ -14,6 +14,11 @@ class EpresenceDetailResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'            => $this->id,
+            'type'          => strtoupper($this->type),
+            'waktu'         => $this->waktu ? $this->waktu->format('Y-m-d H:i:s') : null,
+            'is_approve'    => $this->is_approve
+        ];
     }
 }

@@ -6,10 +6,18 @@ use App\Models\Epresence;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Log;
 
 class EpresenceService
 {
+    protected GateContract $gate;
+
+    public function __construct(GateContract $gate)
+    {
+        $this->gate = $gate;
+    }
+
     public function getList(User $user, $limit = 10, $page = 1)
     {
         if ($user->subordinates()->exists()) {
@@ -41,5 +49,19 @@ class EpresenceService
             $page,
             ['path' => request()->url(), 'query' => request()->query()]
         );
+    }
+
+    public function store(array $data, User $user): Epresence
+    {
+        $this->gate->authorize('create', Epresence::class);
+
+        $data['type'] = strtolower($data['type']);
+
+        return Epresence::create([
+            'id_users'      => $user->id,
+            'type'          => $data['type'],
+            'waktu'         => $data['waktu'],
+            'is_approve'    => false
+        ]);
     }
 }
