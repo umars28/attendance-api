@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "b63783e7-d095-4298-8c82-1de3d8fb26ae",
+		"name": "Attendance API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29799256"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "umar@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://127.0.0.1:8000/api/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Store Presence",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "WhkGpSPR4EXyzb9PHMUGJ3uxh0xseKQ0vf3Gcd8f69b4e940"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "type",
+							"value": "OUT",
+							"type": "text"
+						},
+						{
+							"key": "waktu",
+							"value": "2025-05-22 08:34:23",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://127.0.0.1:8000/api/epresence"
+			},
+			"response": []
+		},
+		{
+			"name": "List Presence",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "BY6tI1XoDOvoiXZmP6GK1VasJLOUYgoMDCY3uFRWf07cbcf3"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/epresence",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"epresence"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approve Presence",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "SIrEYbvX1SKfrQOJf7gRHMEZeRelpjs9yPB36XGlb4bbaa84"
+					}
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "http://127.0.0.1:8000/api/epresence/2/approve"
+			},
+			"response": []
+		}
+	]
+}
