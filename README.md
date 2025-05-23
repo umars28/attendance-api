@@ -99,6 +99,16 @@ This is a RESTful API built for an attendance management system
 
 ## ⚙️ API
 
+### 📋 Default User Data Dummy
+
+| Nama           | Email           | NPP   | NPP Supervisor | Password  |
+|----------------|------------------|-------|----------------|-----------|
+| Ananda Bayu    | bayu@gmail.com   | 12345 | 11111          | password  |
+| Umar           | umar@gmail.com   | 6789  | 11111          | password  |
+| Supervisor 1   | spv1@gmail.com   | 11111 | -              | password  |
+| Supervisor 2   | spv2@gmail.com   | 22222 | -              | password  |
+
+
 #### 1. Login  
 **POST** `api/login`
 
