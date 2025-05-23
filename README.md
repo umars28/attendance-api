@@ -1,66 +1,349 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel RESTful API - Attendance API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a RESTful API built for an attendance management system
 
-## About Laravel
+## Architecture
+- MVC (Model-View-Controller) — Laravel's default structure to separate business logic, presentation, and data handling.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Service Pattern — Encapsulates business logic into dedicated service classes for better maintainability and testability.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Request Validation (Default Directory) — Uses Laravel's App\Http\Requests for input validation to keep controllers clean and robust.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Resource Response (Default Directory) — Leverages Laravel's App\Http\Resources to format and structure JSON responses consistently.
 
-## Learning Laravel
+- Policy (Authorization Handling) — Applies Laravel's policy classes to manage fine-grained authorization logic on models.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Integration Testing — Ensures feature functionality using Laravel’s built-in test suite via PHPUnit.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Requirement
 
-## Laravel Sponsors
+- Framework **laravel**
+- Database **PostgreSQL**
+- API token using **Bearer** (Library laravel sanctum)
+- Password hashing (Driver **bcrypt**)
+- Login (Generate token)
+- Insert attendance (Token validation)
+- Get data attendance (Token validation)
+- Approve attendance by their supervisor only (Token validation)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Features
+### User Features
+- Login
+- View their attendance List
+- Submit attendance (Max 2 each day, 1 Check In and 1 Check Out)
+### Supervisor Features
+- Login
+- View attendance list under their supervision
+- Approve attendance (Only their supervised users)
 
-### Premium Partners
+## Tech Stack
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- PHP 8.x
+- Laravel 9.x
+- PostgreSQL
+- Composer
 
-## Contributing
+## ⚙️ Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Clone the repository:
 
-## Code of Conduct
+   ```bash
+   git clone https://github.com/umars28/attendance-api.git
+   cd attendance-api
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. Install dependencies
+    ```bash
+    composer install
+3. Copy .env file
+    ```bash
+    cp .env.example .env
+    cp .env.example.testing .env.testing
+4. Configure environment variables
+    ```bash
+    .env
+    DB_CONNECTION=pgsql
+    DB_HOST=127.0.0.1
+    DB_PORT=5432
+    DB_DATABASE=yourdatabase
+    DB_USERNAME=yourpostgresusername
+    DB_PASSWORD=yourpostgrespassword
 
-## Security Vulnerabilities
+    .env.testing (for testing unit test)
+    APP_ENV=testing
+    DB_CONNECTION=pgsql
+    DB_HOST=127.0.0.1
+    DB_PORT=5432
+    DB_DATABASE=usingdatabasedifferent
+    DB_USERNAME=yourpostgresusername
+    DB_PASSWORD=yourpostgrespassword
+5. Generate application key
+    ```bash
+    php artisan key:generate
+    php artisan key:generate --env=testing
+6. Run database migrations
+    ```bash
+    php artisan migrate
+7. Run seeder
+    ```bash
+    php artisan db:seed
+8. Run unit/integration test (optional)
+    ```bash
+    php artisan test
+9. Serve the application
+    ```bash
+    php artisan serve
+10. Test and Run API
+    ```bash
+    Run API based on route endpoint URL or can import file Attendance_API.postman_collection inside postman or other tools.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## ⚙️ API
 
-## License
+#### 1. Login  
+**POST** `api/login`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Description:**  
+Authenticate a user and retrieve an access token to authorize future requests.
+
+**Request Headers:**
+- `Content-Type: application/json`
+
+**Request Body Example:**
+```json
+{
+  "email": "umar@gmail.com",
+  "password": "password"
+}
+```
+
+**Response Success Example:**
+```json
+{
+  "status": "success",
+  "message": "Authentication successful",
+  "data": {
+    "token": "14|hm67JxQpon5OgRRAgRbFxDtrcBxqqYvjKXKmPjlTaff279c8",
+    "user": {
+      "id": 3,
+      "nama": "Supervisor 1",
+      "email": "spv1@gmail.com",
+      "npp": "11111",
+      "npp_supervisor": null
+    }
+  }
+}
+```
+**Response Error Validation Example:**
+```json
+{
+    "status": "error",
+    "message": "The provided data is invalid",
+    "errors": {
+        "email": [
+            "The email field is required."
+        ],
+        "password": [
+            "The password field is required."
+        ]
+    }
+}
+```
+**Response Error Invalid Credential Example:**
+```json
+{
+    "status": "error",
+    "message": "Invalid credentials"
+}
+```
+
+
+#### 2. Submit Attendance  
+**POST** `api/epresence`
+
+**Description:**  
+Submit an attendance entry for the currently authenticated user.  
+This is used to record a clock-in or clock-out action and requires an Authorization Bearer Token.
+
+**Request Headers:**
+- `Content-Type: application/json`
+- `Authorization: Bearer {access_token}`
+
+**Request Body Example:**
+```json
+{
+  "type": "IN",
+  "waktu": "2025-04-09 22:59:13"
+}
+```
+
+**Response Success Example:**
+```json
+{
+    "status": "success",
+    "message": "Record created successfully",
+    "data": {
+        "id": 12,
+        "type": "IN",
+        "waktu": "2025-04-09 22:59:13",
+        "is_approve": false
+    }
+}
+```
+**Response Validation Example:**
+```json
+{
+    "status": "error",
+    "message": "The provided data is invalid",
+    "errors": {
+        "type": [
+            "The type field is required."
+        ],
+        "waktu": [
+            "The waktu field is required."
+        ]
+    }
+}
+```
+
+**Response Validation Example:**
+```json
+{
+    "status": "error",
+    "message": "The provided data is invalid",
+    "errors": {
+        "waktu": [
+            "You have already performed absensi masuk on the selected date."
+        ]
+    }
+}
+```
+**Response Unauthorized Example:**
+```json
+{
+    "status": "error",
+    "message": "You are not authorized to perform this action"
+}
+```
+
+#### 3. List Attendance  
+**GET** `api/epresence`
+
+**Description:**  
+Retrieve a list of attendance records for the authenticated user.
+
+**Request Headers:**
+- `Content-Type: application/json`
+- `Authorization: Bearer {access_token}`
+
+**Request Params Example:**
+```bash
+api/epresence
+api/epresence?limit=5
+api/epresence?page=2
+api/epresence?limit=5&page=2
+```
+
+**Response Success Supervisor Example:**
+```json
+{
+    "status": "success",
+    "message": "Success get data",
+    "data": [
+        {
+            "id_user": 1,
+            "nama_user": "Ananda Bayu",
+            "tanggal": "2025-05-23",
+            "waktu_masuk": "22:09:13",
+            "waktu_pulang": "22:09:13",
+            "status_masuk": "REJECT",
+            "status_pulang": "APPROVE"
+        },
+        {
+            "id_user": 2,
+            "nama_user": "Umar",
+            "tanggal": "2025-05-23",
+            "waktu_masuk": "22:59:13",
+            "waktu_pulang": "-",
+            "status_masuk": "REJECT",
+            "status_pulang": "-"
+        },
+        {
+            "id_user": 1,
+            "nama_user": "Ananda Bayu",
+            "tanggal": "2025-05-22",
+            "waktu_masuk": "07:09:13",
+            "waktu_pulang": "17:09:13",
+            "status_masuk": "REJECT",
+            "status_pulang": "APPROVE"
+        }
+    ]
+}
+```
+**Response Success User Example:**
+```json
+{
+    "status": "success",
+    "message": "Success get data",
+    "data": [
+        {
+            "id_user": 2,
+            "nama_user": "Umar",
+            "tanggal": "2025-05-23",
+            "waktu_masuk": "22:59:13",
+            "waktu_pulang": "-",
+            "status_masuk": "REJECT",
+            "status_pulang": "-"
+        },
+        {
+            "id_user": 2,
+            "nama_user": "Umar",
+            "tanggal": "2025-05-22",
+            "waktu_masuk": "-",
+            "waktu_pulang": "22:59:13",
+            "status_masuk": "-",
+            "status_pulang": "REJECT"
+        },
+        {
+            "id_user": 2,
+            "nama_user": "Umar",
+            "tanggal": "2025-05-21",
+            "waktu_masuk": "07:59:13",
+            "waktu_pulang": "07:59:13",
+            "status_masuk": "REJECT",
+            "status_pulang": "REJECT"
+        }
+    ]
+}
+```
+
+
+#### 4. Approve Attendance  
+**PATCH** `api/epresence/{id}/approve`
+
+**Description:**  
+Approve an attendance record by ID. Typically used by a supervisor to approve a subordinate's attendance.
+
+**Request Headers:**
+- `Content-Type: application/json`
+- `Authorization: Bearer {access_token}`
+
+**Response Success Example:**
+```json
+{
+    "status": "success",
+    "message": "Presence has been approved successfully",
+    "data": {
+        "id": 3,
+        "type": "OUT",
+        "waktu": "2025-05-22 17:09:13",
+        "is_approve": true
+    }
+}
+```
+**Response Unauthorized Example:**
+```json
+{
+    "status": "error",
+    "message": "You are not authorized to approve this record"
+}
+```
