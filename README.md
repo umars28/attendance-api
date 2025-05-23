@@ -18,14 +18,14 @@ This is a RESTful API built for an attendance management system
 
 ## Requirement
 
-- Framework **laravel**
-- Database **PostgreSQL**
-- API token using **Bearer** (Library laravel sanctum)
-- Password hashing (Driver **bcrypt**)
-- Login (Generate token)
-- Insert attendance (Token validation)
-- Get data attendance (Token validation)
-- Approve attendance by their supervisor only (Token validation)
+- Framework **Laravel** ✓
+- Database **PostgreSQL** ✓
+- API token using **Bearer** (Library Laravel Sanctum) ✓
+- Password hashing (Driver **bcrypt**) ✓
+- Login (Generate token) ✓
+- Insert attendance (Token validation) ✓
+- Get data attendance (Token validation) ✓
+- Approve attendance by their supervisor only (Token validation) ✓
 
 ## Features
 ### User Features
@@ -95,7 +95,7 @@ This is a RESTful API built for an attendance management system
     php artisan serve
 10. Test and Run API
     ```bash
-    Run API based on route endpoint URL or can import file Attendance_API.postman_collection inside postman or other tools.
+    Run API based on route endpoint URL or can import file Attendance_API.postman_collection on root folder inside postman or other tools.
 
 ## ⚙️ API
 
